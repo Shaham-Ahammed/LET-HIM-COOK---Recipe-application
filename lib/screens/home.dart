@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:let_him_cook/screens/item_list.dart';
 import 'package:let_him_cook/utils/colors.dart';
 import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
+import 'package:let_him_cook/utils/screen_transition.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -9,18 +12,15 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [whiteColor, greyColor])),
+      decoration: backgroundGradient(),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: transparentColor,
         body: SafeArea(
           child: Container(
             child: Padding(
-              padding: EdgeInsets.all(mediaqueryHeight(0.02, context)),
+              padding: commonScreenPadding(context),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     width: double.infinity,
@@ -43,6 +43,7 @@ class Home extends StatelessWidget {
                         ),
                         Expanded(
                           child: TextField(
+                            cursorColor: amberColor,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Search by food name",
@@ -82,18 +83,107 @@ class Home extends StatelessWidget {
                           children: [
                             myFont("CONFUSED !",
                                 fontFamily: patrickHand,
-                                fontSize: mediaqueryHeight(0.03, context),
+                                fontSize: mediaqueryHeight(0.026, context),
                                 fontWeight: FontWeight.w600,
                                 fontColor: blackColor),
                             myFont("suggest me with a\nsurprise recipe",
                                 fontFamily: josefin,
-                                fontSize: mediaqueryHeight(0.025, context),
+                                fontSize: mediaqueryHeight(0.022, context),
                                 fontWeight: FontWeight.w400,
                                 fontColor: whiteColor)
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(width: mediaqueryWidth(0.07, context)),
+                      Container(
+                        width: mediaqueryWidth(0.25, context),
+                        height: mediaqueryHeight(0.15, context),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: greyColor,
+                                  blurRadius: 2,
+                                  offset: Offset(mediaqueryHeight(0.0, context),
+                                      mediaqueryHeight(0.01, context)))
+                            ],
+                            color: amberColor,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.favorite_rounded,
+                              size: mediaqueryHeight(0.040, context),
+                              color: Colors.red,
+                            ),
+                            SizedBox(
+                              height: mediaqueryHeight(0.01, context),
+                            ),
+                            myFont("Fav",
+                                fontFamily: josefin,
+                                fontSize: mediaqueryHeight(0.022, context),
+                                fontWeight: FontWeight.w400,
+                                fontColor: whiteColor),
+                          ],
+                        ),
+                      ),
                     ],
+                  ),
+                  SizedBox(
+                    height: mediaqueryHeight(0.03, context),
+                  ),
+                  myFont("CATEGORIES",
+                      fontFamily: patrickHand,
+                      fontSize: mediaqueryHeight(0.03, context),
+                      fontWeight: FontWeight.w700,
+                      fontColor: blackColor),
+                  SizedBox(
+                    height: mediaqueryHeight(0.03, context),
+                  ),
+                  FutureBuilder(
+                    future:fetchingCategories() ,
+                    builder: (context, snapshot) {
+                      
+                      if (snapshot.connectionState==ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      return    Expanded(
+                        child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: .7,
+                          crossAxisSpacing: mediaqueryWidth(0.03, context),
+                          crossAxisCount: 3),
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    FadeTransitionPageRoute(
+                                        child: CategoryListScreen()));
+                              },
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    "https://www.themealdb.com//images//media//meals//1548772327.jpg"),
+                                backgroundColor: greyColor,
+                                radius: mediaqueryHeight(0.06, context),
+                              ),
+                            ),
+                            SizedBox(
+                              height: mediaqueryHeight(0.01, context),
+                            ),
+                            myFont("fasads",
+                                fontFamily: josefin,
+                                fontSize: mediaqueryHeight(0.023, context),
+                                fontWeight: FontWeight.w500,
+                                fontColor: blackColor)
+                          ],
+                        );
+                      },
+                      itemCount: 9,
+                    ));
+                    },
+                
                   )
                 ],
               ),
@@ -103,4 +193,22 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
+
+
+fetchingCategories()async{
+   final url ="https://www.themealdb.com/api/json/v1/1/categories.php";
+   final uri = Uri.parse(url);
+
+   try {
+  final response=   await  http.get(uri);
+  if (response.statusCode==200) {
+  
+    final body = response.body;
+     
+    print(body);
+  }
+   } catch (e) {
+     
+   }
 }
