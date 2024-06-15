@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                             cursorColor: amberColor,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Shadin faisal",
+                                hintText: "Shaham ahammed",
                                 hintStyle: TextStyle(
                                     color: whiteColor,
                                     fontFamily: josefin,
