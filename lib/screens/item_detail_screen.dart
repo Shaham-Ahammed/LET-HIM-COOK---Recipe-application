@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:let_him_cook/databse/db_helper.dart';
+import 'package:let_him_cook/databse/db_opertions.dart';
+import 'package:let_him_cook/model/favorite_model.dart';
 import 'package:let_him_cook/utils/colors.dart';
 import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
@@ -81,10 +84,16 @@ class ItemDetailScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w700,
                                         fontColor: blackColor),
                                   )),
-                              Icon(
-                                Icons.favorite_rounded,
-                                color: amberColor,
-                                size: mediaqueryHeight(0.04, context),
+                              GestureDetector(
+                                onTap: () {
+                                  DbOperations().addToFav(item['idMeal'],
+                                      item['strMeal'], item['strMealThumb']);
+                                },
+                                child: Icon(
+                                  Icons.favorite_rounded,
+                                  color: amberColor,
+                                  size: mediaqueryHeight(0.04, context),
+                                ),
                               )
                             ],
                           ),

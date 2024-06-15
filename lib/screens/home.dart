@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:let_him_cook/screens/fav_list_screen.dart';
 import 'package:let_him_cook/screens/item_detail_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class Home extends StatelessWidget {
                             cursorColor: amberColor,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Shaham ahammed",
+                                hintText: "Search by food name",
                                 hintStyle: TextStyle(
                                     color: whiteColor,
                                     fontFamily: josefin,
@@ -105,36 +106,43 @@ class Home extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: mediaqueryWidth(0.07, context)),
-                      Container(
-                        width: mediaqueryWidth(0.25, context),
-                        height: mediaqueryHeight(0.15, context),
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: greyColor,
-                                  blurRadius: 2,
-                                  offset: Offset(mediaqueryHeight(0.0, context),
-                                      mediaqueryHeight(0.01, context)))
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                              FadeTransitionPageRoute(child: FavListScreen()));
+                        },
+                        child: Container(
+                          width: mediaqueryWidth(0.25, context),
+                          height: mediaqueryHeight(0.15, context),
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: greyColor,
+                                    blurRadius: 2,
+                                    offset: Offset(
+                                        mediaqueryHeight(0.0, context),
+                                        mediaqueryHeight(0.01, context)))
+                              ],
+                              color: amberColor,
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.favorite_rounded,
+                                size: mediaqueryHeight(0.040, context),
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                height: mediaqueryHeight(0.01, context),
+                              ),
+                              myFont("Fav",
+                                  fontFamily: josefin,
+                                  fontSize: mediaqueryHeight(0.022, context),
+                                  fontWeight: FontWeight.w400,
+                                  fontColor: whiteColor),
                             ],
-                            color: amberColor,
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.favorite_rounded,
-                              size: mediaqueryHeight(0.040, context),
-                              color: Colors.red,
-                            ),
-                            SizedBox(
-                              height: mediaqueryHeight(0.01, context),
-                            ),
-                            myFont("Fav",
-                                fontFamily: josefin,
-                                fontSize: mediaqueryHeight(0.022, context),
-                                fontWeight: FontWeight.w400,
-                                fontColor: whiteColor),
-                          ],
+                          ),
                         ),
                       ),
                     ],
