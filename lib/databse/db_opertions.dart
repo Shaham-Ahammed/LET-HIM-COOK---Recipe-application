@@ -14,8 +14,8 @@ class DbOperations {
     isFavorite.value = true;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          duration: Duration(seconds: 1),
-          shape: RoundedRectangleBorder(
+          duration: const Duration(seconds: 1),
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30))),
           backgroundColor: amberColor,
@@ -33,8 +33,8 @@ class DbOperations {
     isFavorite.value = false;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          duration: Duration(seconds: 1),
-          shape: RoundedRectangleBorder(
+          duration: const Duration(seconds: 1),
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30))),
           backgroundColor: amberColor,
@@ -46,4 +46,17 @@ class DbOperations {
                   fontColor: blackColor))),
     );
   }
+  void checkFavorite(String id) async {
+  final allData = await DbHelper.getAllData();
+  List<String> ids = [];
+  for (var ele in allData) {
+    ids.add(ele['id']);
+  }
+  if (ids.contains(id)) {
+    isFavorite.value = true;
+  } else {
+    isFavorite.value = false;
+  }
+}
+
 }

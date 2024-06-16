@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:let_him_cook/databse/db_helper.dart';
-import 'package:let_him_cook/databse/db_opertions.dart';
-import 'package:let_him_cook/screens/item_detail_screen.dart';
 import 'package:let_him_cook/utils/colors.dart';
 import 'package:let_him_cook/utils/font.dart';
-import 'package:let_him_cook/utils/loading_indicator.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
-import 'package:let_him_cook/utils/screen_transition.dart';
 
 class FavListName extends StatelessWidget {
   const FavListName({
@@ -18,7 +13,7 @@ class FavListName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: mediaqueryWidth(0.54, context),
         child: myFont(item['name'],
             overflow: TextOverflow.ellipsis,

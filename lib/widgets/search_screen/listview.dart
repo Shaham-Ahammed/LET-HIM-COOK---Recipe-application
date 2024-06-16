@@ -1,19 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:let_him_cook/data/api_functions.dart';
 import 'package:let_him_cook/screens/item_detail_screen.dart';
 import 'package:let_him_cook/utils/colors.dart';
-import 'package:let_him_cook/widgets/search_screen/debouncer.dart';
 import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
 import 'package:let_him_cook/utils/screen_transition.dart';
-import 'package:let_him_cook/widgets/item_lists/shimmer_on_listview.dart';
-import 'package:let_him_cook/widgets/search_screen/empty_list.dart';
-import 'package:let_him_cook/widgets/search_screen/listview.dart';
-import 'package:let_him_cook/widgets/search_screen/search_box.dart';
-import 'package:lottie/lottie.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:http/http.dart' as http;
 
 class ListviewOnSearchScreen extends StatelessWidget {
   const ListviewOnSearchScreen({
@@ -58,7 +48,7 @@ class ListviewOnSearchScreen extends StatelessWidget {
                   SizedBox(
                     width: mediaqueryWidth(0.02, context),
                   ),
-                  Container(
+                  SizedBox(
                       width: mediaqueryWidth(0.64, context),
                       child: myFont(item['strMeal'],
                           overflow: TextOverflow.ellipsis,

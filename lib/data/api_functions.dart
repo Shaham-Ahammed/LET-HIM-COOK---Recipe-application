@@ -6,7 +6,7 @@ import 'package:let_him_cook/utils/valuenotifiers.dart';
 
 class ApiFunctions{
  static Future<List<dynamic>> fetchingCategories() async {
-  final url = "https://www.themealdb.com/api/json/v1/1/categories.php";
+  const url = "https://www.themealdb.com/api/json/v1/1/categories.php";
   final uri = Uri.parse(url);
 
   try {
@@ -43,7 +43,7 @@ static Future<Map<String, dynamic>> fetchItemById(String id) async {
 }
 
 static Future<Map<String, dynamic>> fetchItemRandomly() async {
-  final url = "https://www.themealdb.com/api/json/v1/1/random.php";
+  const url = "https://www.themealdb.com/api/json/v1/1/random.php";
   final uri = Uri.parse(url);
   try {
     final response = await http.get(uri);

@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:let_him_cook/screens/item_detail_screen.dart';
 import 'package:let_him_cook/utils/colors.dart';
 import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
-import 'package:let_him_cook/utils/screen_transition.dart';
-import 'package:http/http.dart' as http;
 
 
 class BackButtonAndItemNameOnItemList extends StatelessWidget {
@@ -26,7 +21,7 @@ class BackButtonAndItemNameOnItemList extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back_ios_new)),
+            child: const Icon(Icons.arrow_back_ios_new)),
         Center(
             child: myFont(category,
                 fontFamily: patrickHand,

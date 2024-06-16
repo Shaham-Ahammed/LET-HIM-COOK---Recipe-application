@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:let_him_cook/databse/db_helper.dart';
-import 'package:let_him_cook/databse/db_opertions.dart';
 import 'package:let_him_cook/screens/item_detail_screen.dart';
 import 'package:let_him_cook/utils/colors.dart';
-import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/loading_indicator.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
 import 'package:let_him_cook/utils/screen_transition.dart';
@@ -49,16 +47,16 @@ class _FavListScreenState extends State<FavListScreen> {
             child: Padding(
           padding: commonScreenPadding(context),
           child: isLoading
-              ? Center(child: SpoonLoadingIndicator())
+              ? const Center(child: SpoonLoadingIndicator())
               : Column(
                   children: [
-                    FavListHeadingAndBackButton(),
+                    const FavListHeadingAndBackButton(),
                     SizedBox(
                       height: mediaqueryHeight(0.02, context),
                     ),
                     Expanded(
                         child: favList.isEmpty
-                            ? FavEmptyImageAndText()
+                            ? const FavEmptyImageAndText()
                             : ListView.separated(
                                 itemBuilder: (context, index) {
                                   final item = favList[index];

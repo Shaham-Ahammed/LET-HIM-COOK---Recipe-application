@@ -1,21 +1,9 @@
-import 'dart:convert';
-import 'package:let_him_cook/screens/fav_list_screen.dart';
 import 'package:let_him_cook/screens/item_detail_screen.dart';
-import 'package:let_him_cook/screens/search_screen.dart';
-import 'package:let_him_cook/widgets/home/cateogries_heading.dart';
-import 'package:let_him_cook/widgets/home/fav_container.dart';
-import 'package:let_him_cook/widgets/home/gridview_items.dart';
-import 'package:let_him_cook/widgets/home/search_box.dart';
-import 'package:let_him_cook/widgets/home/shimmer_gridview.dart';
-import 'package:let_him_cook/widgets/home/surprise_recipe_container.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:let_him_cook/screens/item_list.dart';
 import 'package:let_him_cook/utils/colors.dart';
 import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
 import 'package:let_him_cook/utils/screen_transition.dart';
-import 'package:http/http.dart' as http;
 
 class SurpriseRecipeContainer extends StatelessWidget {
   const SurpriseRecipeContainer({
@@ -27,7 +15,7 @@ class SurpriseRecipeContainer extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context)
-            .push(FadeTransitionPageRoute(child: ItemDetailScreen()));
+            .push(FadeTransitionPageRoute(child: const ItemDetailScreen()));
       },
       child: Container(
         width: mediaqueryWidth(0.55, context),

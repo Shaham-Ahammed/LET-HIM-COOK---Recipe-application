@@ -1,12 +1,9 @@
-import 'dart:convert';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:let_him_cook/screens/item_detail_screen.dart';
 import 'package:let_him_cook/utils/colors.dart';
 import 'package:let_him_cook/utils/font.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
 import 'package:let_him_cook/utils/screen_transition.dart';
-import 'package:http/http.dart' as http;
 
 class ListViewOnItemList extends StatelessWidget {
   const ListViewOnItemList({
@@ -55,7 +52,7 @@ class ListViewOnItemList extends StatelessWidget {
                       SizedBox(
                         width: mediaqueryWidth(0.02, context),
                       ),
-                      Container(
+                      SizedBox(
                           width: mediaqueryWidth(0.64, context),
                           child: myFont(item['strMeal'],
                               overflow: TextOverflow.ellipsis,
