@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:let_him_cook/data/api_functions.dart';
+import 'package:let_him_cook/data/network_stream.dart';
 import 'package:let_him_cook/utils/colors.dart';
+import 'package:let_him_cook/utils/loading_indicator.dart';
+import 'package:let_him_cook/utils/no_network.dart';
 import 'package:let_him_cook/widgets/search_screen/debouncer.dart';
 import 'package:let_him_cook/utils/mediaquery.dart';
 import 'package:let_him_cook/widgets/item_lists/shimmer_on_listview.dart';
@@ -46,36 +49,50 @@ class _SearchScreenState extends State<SearchScreen> {
         body: SafeArea(
             child: Padding(
           padding: commonScreenPadding(context),
-          child: Column(
-            children: [
-              searchWidgetOnSearchScreen(
-                  context,focusNode,
-                  (value) => debouncer.run(() {
-                        setState(() {
-                          searchQuery = value;
-                        });
-                      })),
-              SizedBox(
-                height: mediaqueryHeight(0.03, context),
-              ),
-              Expanded(
-                child: FutureBuilder<List<dynamic>>(
-                  future: ApiFunctions.fetchingAccordingToName(searchQuery),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const ShimmerOnItemList();
-                    }
-                    if (snapshot.hasData && snapshot.data!.isEmpty) {
-                      return const EmptySerchResultImageAndText();
-                    }
-
-                    return ListviewOnSearchScreen(
-                      snapshot: snapshot,
-                    );
-                  },
-                ),
-              )
-            ],
+          child: StreamBuilder<bool>(
+            stream: networkConncetivityStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Expanded(
+                        child: Center(
+                      child: SpoonLoadingIndicator(),
+                    ));
+                  }
+                  if (!snapshot.data!) {
+                    return const NoNetworkDisplayWidget();
+                  }
+              return Column(
+                children: [
+                  searchWidgetOnSearchScreen(
+                      context,focusNode,
+                      (value) => debouncer.run(() {
+                            setState(() {
+                              searchQuery = value;
+                            });
+                          })),
+                  SizedBox(
+                    height: mediaqueryHeight(0.03, context),
+                  ),
+                  Expanded(
+                    child: FutureBuilder<List<dynamic>>(
+                      future: ApiFunctions.fetchingAccordingToName(searchQuery),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const ShimmerOnItemList();
+                        }
+                        if (snapshot.hasData && snapshot.data!.isEmpty) {
+                          return const EmptySerchResultImageAndText();
+                        }
+              
+                        return ListviewOnSearchScreen(
+                          snapshot: snapshot,
+                        );
+                      },
+                    ),
+                  )
+                ],
+              );
+            }
           ),
         )),
       ),

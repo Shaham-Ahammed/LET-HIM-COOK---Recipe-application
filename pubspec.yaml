@@ -16,6 +16,7 @@ dependencies:
   sqflite: ^2.3.3+1
   lottie: ^3.1.2
   flutter_native_splash: ^2.4.0
+  connectivity_plus: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +31,7 @@ flutter:
     - assets/animations/no_data_found.json
     - assets/images/bonbon-fast-food-combo-set-fries-burger-sauce-and-soda.png
     - assets/images/splash.jpg
+    - assets/images/no-wifi.png
 
   fonts:
     - family: Josefin

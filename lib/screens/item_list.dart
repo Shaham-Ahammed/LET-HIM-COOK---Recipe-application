@@ -1,4 +1,7 @@
 import 'package:let_him_cook/data/api_functions.dart';
+import 'package:let_him_cook/data/network_stream.dart';
+import 'package:let_him_cook/utils/loading_indicator.dart';
+import 'package:let_him_cook/utils/no_network.dart';
 import 'package:let_him_cook/widgets/item_lists/back_button_and_name.dart';
 import 'package:let_him_cook/widgets/item_lists/listview.dart';
 import 'package:let_him_cook/widgets/item_lists/shimmer_on_listview.dart';
@@ -19,24 +22,38 @@ class CategoryListScreen extends StatelessWidget {
         body: SafeArea(
             child: Padding(
           padding: commonScreenPadding(context),
-          child: Column(
-            children: [
-              BackButtonAndItemNameOnItemList(category: category),
-              SizedBox(
-                height: mediaqueryHeight(0.02, context),
-              ),
-              FutureBuilder<List<dynamic>>(
-                future:ApiFunctions. fetchingIndividualCategoryItems(category),
+          child: StreamBuilder<bool>(
+          stream: networkConncetivityStream(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const ShimmerOnItemList();
+                    return const Expanded(
+                        child: Center(
+                      child: SpoonLoadingIndicator(),
+                    ));
                   }
-                  return ListViewOnItemList(
-                    snapshot: snapshot,
-                  );
-                },
-              )
-            ],
+                  if (!snapshot.data!) {
+                    return const NoNetworkDisplayWidget();
+                  }
+              return Column(
+                children: [
+                  BackButtonAndItemNameOnItemList(category: category),
+                  SizedBox(
+                    height: mediaqueryHeight(0.02, context),
+                  ),
+                  FutureBuilder<List<dynamic>>(
+                    future:ApiFunctions. fetchingIndividualCategoryItems(category),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const ShimmerOnItemList();
+                      }
+                      return ListViewOnItemList(
+                        snapshot: snapshot,
+                      );
+                    },
+                  )
+                ],
+              );
+            }
           ),
         )),
       ),
